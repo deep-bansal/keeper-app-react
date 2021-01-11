@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
+import Zoom from '@material-ui/core/Zoom';
 
 class CreateNote extends Component {
   constructor(props) {
@@ -6,6 +9,7 @@ class CreateNote extends Component {
     this.state = {
       title: '',
       content: '',
+      isClicked: false,
     };
   }
 
@@ -30,22 +34,40 @@ class CreateNote extends Component {
     onAdd(this.state.title, this.state.content);
   };
 
+  handleExpand = () => {
+    this.setState({
+      isClicked: true,
+    });
+  };
+
   render() {
     return (
       <form className="create-note">
-        <input
-          onChange={this.handleChange}
-          name="title"
-          placeholder="Title"
-          value={this.state.title}
-        />
+        {this.state.isClicked && (
+          <input
+            onChange={this.handleChange}
+            name="title"
+            placeholder="Title"
+            value={this.state.title}
+          />
+        )}
+
         <textarea
+          rows={this.state.isClicked ? '3' : '1'}
           onChange={this.handleChange}
           name="content"
           placeholder="Take a note ..."
           value={this.state.content}
+          onClick={this.handleExpand}
         />
-        <button onClick={this.handleSubmit}>Add</button>
+
+        {this.state.isClicked && (
+          <Zoom in={true}>
+            <Fab onClick={this.handleSubmit}>
+              <AddIcon />
+            </Fab>
+          </Zoom>
+        )}
       </form>
     );
   }

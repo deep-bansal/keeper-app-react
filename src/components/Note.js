@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../index.css';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 class Note extends Component {
   handleClick = (id) => {
@@ -17,7 +18,7 @@ class Note extends Component {
             this.handleClick(note.id);
           }}
         >
-          Delete
+          <DeleteIcon />
         </button>
       </div>
     );

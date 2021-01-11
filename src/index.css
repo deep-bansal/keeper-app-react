@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #eee;
+  position: relative;
+  background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
 }
 
 code {
@@ -21,11 +24,6 @@ html {
 .header {
   padding: 10px;
   background-color: #f5ba13;
-}
-
-body {
-  background-color: #eee;
-  position: relative;
 }
 
 footer {
