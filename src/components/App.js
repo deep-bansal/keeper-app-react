@@ -47,18 +47,27 @@ class App extends Component {
       notesArray: newNotesArr,
     });
   };
-  updateNote = (titleVal, note) => {
+  updateNote = (tagName, val, note) => {
     const docRef = this.db.collection('Notes').doc(note.id);
-    docRef
-      .update({
-        title: titleVal,
-      })
-      .then(() => {
-        console.log('updated successfully');
-      })
-      .catch((error) => {
-        console.log('Error:', error);
-      });
+    if (tagName === 'h1') {
+      docRef
+        .update({
+          title: val,
+        })
+        .then()
+        .catch((error) => {
+          console.log('Error:', error);
+        });
+    } else if (tagName === 'p') {
+      docRef
+        .update({
+          content: val,
+        })
+        .then()
+        .catch((error) => {
+          console.log('Error:', error);
+        });
+    }
   };
 
   render() {

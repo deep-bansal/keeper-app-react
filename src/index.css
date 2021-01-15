@@ -70,7 +70,7 @@ footer {
   margin: 10px;
   float: left;
   overflow-wrap: break-word;
-  transition: ease 10s;
+  /* transition: ease 10s; */
 }
 
 /* .note:hover .buttonList li {
@@ -199,6 +199,10 @@ textarea {
 
 @media only screen and (max-width: 800px) {
   .create-note {
-    margin-left: 30px;
+    margin-left: 10px;
+    width: 350px;
+  }
+  .note {
+    width: 350px;
   }
 }
