@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import HighlightIcon from '@material-ui/icons/Highlight';
+import MenuIcon from '@material-ui/icons/Menu';
 import '../index.css';
 
 class Header extends Component {
@@ -7,7 +8,8 @@ class Header extends Component {
     return (
       <header className="header">
         <h1 style={styles.heading}>
-          <HighlightIcon /> Keeper
+          <MenuIcon className="menuIcon" />
+          <HighlightIcon className="logo" /> Keeper
         </h1>
       </header>
     );
@@ -21,8 +23,7 @@ const styles = {
     fontFamily: '"McLaren", cursive',
     color: '#fff',
     fontWeight: '200',
-    marginLeft: '30',
-    marginTop: '30',
+    fontSize: '2.2rem',
   },
 };
 

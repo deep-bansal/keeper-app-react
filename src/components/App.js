@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Footer, Note } from './';
+import { Header, Footer, Note, NavMenu } from './';
 import CreateNote from './CreateNote';
 import firebase from 'firebase';
 
@@ -47,19 +47,41 @@ class App extends Component {
       notesArray: newNotesArr,
     });
   };
+  updateNote = (titleVal, note) => {
+    const docRef = this.db.collection('Notes').doc(note.id);
+    docRef
+      .update({
+        title: titleVal,
+      })
+      .then(() => {
+        console.log('updated successfully');
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+  };
+
   render() {
     const { notesArray } = this.state;
     console.log(notesArray);
     return (
-      <div>
+      <div className="app">
         <Header />
-        <CreateNote onAdd={this.addNote} />
+        <NavMenu />
+        <div className="notes-area">
+          <CreateNote onAdd={this.addNote} />
 
-        {notesArray.map((note) => {
-          return (
-            <Note note={note} key={note.id} deleteNote={this.deleteNote} />
-          );
-        })}
+          {notesArray.map((note) => {
+            return (
+              <Note
+                note={note}
+                key={note.id}
+                deleteNote={this.deleteNote}
+                updateNote={this.updateNote}
+              />
+            );
+          })}
+        </div>
 
         <Footer />
       </div>

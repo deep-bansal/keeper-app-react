@@ -20,12 +20,38 @@ html {
   margin-top: -21px;
   font-family: 'Montserrat', sans-serif;
 }
+/* app */
+.app {
+  display: flex;
+  flex-wrap: wrap;
+}
+/* header */
 
 .header {
+  position: fixed;
   padding: 10px;
+  padding-bottom: 5px;
   background-color: #f5ba13;
+  width: 100%;
+  z-index: 2;
+}
+.menuIcon {
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+  position: relative;
+  top: 8px;
+  margin-right: 15px;
+}
+.menuIcon:hover {
+  box-shadow: 0px 0px 7px 7px lightgray;
+  border-radius: 50%;
+}
+.logo {
+  height: 1.9rem !important;
+  width: 1.9rem !important;
 }
 
+/* footer */
 footer {
   position: fixed;
   bottom: 0;
@@ -33,16 +59,23 @@ footer {
   color: #ccc;
   width: 100%;
 }
+/* note */
 
 .note {
   background: #fff;
   border-radius: 7px;
   box-shadow: 0 2px 5px #ccc;
-  padding: 10px;
-  width: 240px;
-  margin: 16px;
+  padding: 10px 12px 0px 12px;
+  width: 250px;
+  margin: 10px;
   float: left;
+  overflow-wrap: break-word;
+  transition: ease 10s;
 }
+
+/* .note:hover .buttonList li {
+  opacity: 1;
+} */
 
 .note h1 {
   font-size: 1.1em;
@@ -55,18 +88,31 @@ footer {
   white-space: pre-wrap;
 }
 
-.note button {
+.buttonList {
+  list-style: none;
+  display: inline;
   position: relative;
-  float: right;
-  margin-right: 10px;
-  color: #f5ba13;
+  float: left;
+  margin-left: -40px;
+}
+
+.buttonList li {
+  display: inline;
+  margin: 5px;
+  /* opacity: 0; */
+}
+
+.note button {
+  /* color: #f5ba13; */
   border: none;
   width: 36px;
   height: 36px;
   cursor: pointer;
   outline: none;
+  background: transparent;
 }
 
+/* create-note */
 .create-note {
   position: relative;
   width: 480px;
@@ -101,4 +147,58 @@ textarea {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   outline: none;
+}
+
+.notes-area {
+  /* border: 2px solid blue; */
+  position: absolute;
+  left: 20%;
+  top: 117px;
+  width: 79.5%;
+}
+
+/* navmenu */
+.navmenu {
+  position: fixed;
+  top: 70px;
+  height: 528px;
+  width: 200px;
+  z-index: 2;
+}
+
+.list {
+  list-style: none;
+  padding-left: 15px;
+}
+
+.nav-icons {
+  height: 2.4rem !important;
+  width: 2.4rem !important;
+  margin-top: 15px;
+  position: relative;
+  top: 12px;
+  /* color: rgb(255, 255, 255); */
+}
+
+.nav-icons:hover {
+  border-radius: 50%;
+  background-color: #f5da92;
+}
+
+.nav-icons + span {
+  font-size: 1.2rem;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 1000px) {
+  .notes-area {
+    left: 200px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .create-note {
+    margin-left: 30px;
+  }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
+// import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
 class CreateNote extends Component {
   constructor(props) {
@@ -34,9 +35,27 @@ class CreateNote extends Component {
     onAdd(this.state.title, this.state.content);
   };
 
-  handleExpand = () => {
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false);
+  }
+
+  handleClick = (e) => {
+    if (this.node.contains(e.target)) {
+      this.setState({
+        isClicked: true,
+      });
+
+      return;
+    }
+    this.handleClickOutside();
+  };
+  handleClickOutside = () => {
     this.setState({
-      isClicked: true,
+      isClicked: false,
     });
   };
 
@@ -44,23 +63,28 @@ class CreateNote extends Component {
     const { isClicked } = this.state;
     return (
       <form className="create-note">
-        {isClicked && (
-          <input
+        <div
+          ref={(node) => {
+            this.node = node;
+          }}
+          onClick={this.handleClick}
+        >
+          {isClicked && (
+            <input
+              onChange={this.handleChange}
+              name="title"
+              placeholder="Title"
+              value={this.state.title}
+            />
+          )}
+          <textarea
+            rows={isClicked ? '3' : '1'}
             onChange={this.handleChange}
-            name="title"
-            placeholder="Title"
-            value={this.state.title}
+            name="content"
+            placeholder="Take a note ..."
+            value={this.state.content}
           />
-        )}
-
-        <textarea
-          rows={isClicked ? '3' : '1'}
-          onChange={this.handleChange}
-          name="content"
-          placeholder="Take a note ..."
-          value={this.state.content}
-          onClick={this.handleExpand}
-        />
+        </div>
 
         {isClicked && (
           <Zoom in={true}>
