@@ -3,66 +3,42 @@ import { Header, Footer, Note } from './';
 import CreateNote from './CreateNote';
 import firebase from 'firebase';
 
-var count = 0;
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       notesArray: [],
     };
+
+    this.db = firebase.firestore();
   }
 
   componentDidMount() {
-    // firebase
-    //   .firestore()
-    //   .collection('Notes')
-    //   .get()
-    //   .then((snapshot) => {
-    //     // console.log(snapshot);
-
-    //     snapshot.docs.map((doc) => {
-    //       console.log(doc.data());
-    //     });
-
-    //     const notesArray = snapshot.docs.map((doc) => {
-    //       const data = doc.data();
-    //       data['id'] = doc.id;
-    //       return data;
-    //     });
-    //     this.setState({
-    //       notesArray,
-    //     });
-    //   });
-    firebase
-      .firestore()
-      .collection('Notes')
-      .onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          console.log(doc.data());
-        });
-
-        const notesArray = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          data['id'] = doc.id;
-          return data;
-        });
-        this.setState({
-          notesArray,
-        });
+    this.db.collection('Notes').onSnapshot((snapshot) => {
+      const notesArray = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        data['id'] = doc.id;
+        return data;
       });
+      this.setState({
+        notesArray,
+      });
+    });
   }
 
   addNote = (title, content) => {
-    const note = {
-      title: title,
-      content: content,
-      id: count,
-    };
-    count++;
-    const newNotesArr = [...this.state.notesArray, note];
-    this.setState({
-      notesArray: newNotesArr,
-    });
+    this.db
+      .collection('Notes')
+      .add({
+        title: title,
+        content: content,
+      })
+      .then((docRef) => {
+        console.log('Note has been added', docRef);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
   };
 
   deleteNote = (id) => {

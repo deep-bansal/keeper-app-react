@@ -41,9 +41,10 @@ class CreateNote extends Component {
   };
 
   render() {
+    const { isClicked } = this.state;
     return (
       <form className="create-note">
-        {this.state.isClicked && (
+        {isClicked && (
           <input
             onChange={this.handleChange}
             name="title"
@@ -53,7 +54,7 @@ class CreateNote extends Component {
         )}
 
         <textarea
-          rows={this.state.isClicked ? '3' : '1'}
+          rows={isClicked ? '3' : '1'}
           onChange={this.handleChange}
           name="content"
           placeholder="Take a note ..."
@@ -61,7 +62,7 @@ class CreateNote extends Component {
           onClick={this.handleExpand}
         />
 
-        {this.state.isClicked && (
+        {isClicked && (
           <Zoom in={true}>
             <Fab onClick={this.handleSubmit}>
               <AddIcon />
