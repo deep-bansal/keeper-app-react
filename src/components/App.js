@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Header, Footer, Note } from './';
 import CreateNote from './CreateNote';
+import firebase from 'firebase';
 
 var count = 0;
 class App extends Component {
@@ -9,6 +10,29 @@ class App extends Component {
     this.state = {
       notesArray: [],
     };
+  }
+
+  componentDidMount() {
+    firebase
+      .firestore()
+      .collection('Notes')
+      .get()
+      .then((snapshot) => {
+        // console.log(snapshot);
+
+        snapshot.docs.map((doc) => {
+          console.log(doc.data());
+        });
+
+        const notesArray = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          data['id'] = doc.id;
+          return data;
+        });
+        this.setState({
+          notesArray,
+        });
+      });
   }
 
   addNote = (title, content) => {
