@@ -13,13 +13,30 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // firebase
+    //   .firestore()
+    //   .collection('Notes')
+    //   .get()
+    //   .then((snapshot) => {
+    //     // console.log(snapshot);
+
+    //     snapshot.docs.map((doc) => {
+    //       console.log(doc.data());
+    //     });
+
+    //     const notesArray = snapshot.docs.map((doc) => {
+    //       const data = doc.data();
+    //       data['id'] = doc.id;
+    //       return data;
+    //     });
+    //     this.setState({
+    //       notesArray,
+    //     });
+    //   });
     firebase
       .firestore()
       .collection('Notes')
-      .get()
-      .then((snapshot) => {
-        // console.log(snapshot);
-
+      .onSnapshot((snapshot) => {
         snapshot.docs.map((doc) => {
           console.log(doc.data());
         });
