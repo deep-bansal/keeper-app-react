@@ -76,7 +76,6 @@ footer {
   width: 250px;
   margin: 10px;
   overflow-wrap: break-word;
-  position: relative;
   display: inline-block;
   vertical-align: top;
   /* transition: ease 10s; */
@@ -123,15 +122,17 @@ p:focus {
   border-radius: 50%;
   background-color: rgb(226, 223, 223);
 }
-
+.color-li {
+  position: relative;
+}
 .color-pallete {
   height: 80px;
   width: 80px;
   z-index: 2;
   float: left;
   position: absolute;
-  top: 21%;
-  left: 31%;
+  top: -6rem;
+  left: 1rem;
   display: flex;
   flex-wrap: wrap;
   background-color: #fff;
@@ -191,7 +192,6 @@ textarea {
 }
 
 .notes-area {
-  /* border: 2px solid blue; */
   position: absolute;
   left: 20%;
   top: 117px;
@@ -210,7 +210,7 @@ textarea {
 .list {
   list-style: none;
   padding-left: 15px;
-  margin-top: -18px;
+  margin-top: 10px;
 }
 
 .list li {
@@ -220,10 +220,6 @@ textarea {
 .nav-icons {
   height: 2.4rem !important;
   width: 2.4rem !important;
-  /* margin-top: 15px; */
-  /* position: relative;
-  top: 2px; */
-  /* color: rgb(255, 255, 255); */
 }
 
 .nav-icons:hover {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { Link } from 'react-router-dom';
 
 class NavMenu extends Component {
   render() {
@@ -9,16 +10,20 @@ class NavMenu extends Component {
       <div className="navmenu">
         <ul className="list">
           <li>
-            <EmojiObjectsOutlinedIcon className="nav-icons" />
-            {this.props.expandNavMenu && <span>Notes</span>}
+            <Link to="/">
+              <EmojiObjectsOutlinedIcon className="nav-icons" />
+              {this.props.expandNavMenu && <span>Notes</span>}
+            </Link>
           </li>
           <li>
             <LabelOutlinedIcon className="nav-icons" />
             {this.props.expandNavMenu && <span>Label</span>}
           </li>
           <li>
-            <DeleteOutlineIcon className="nav-icons" />
-            {this.props.expandNavMenu && <span>Delete</span>}
+            <Link to="/deletedNotes">
+              <DeleteOutlineIcon className="nav-icons" />
+              {this.props.expandNavMenu && <span>Delete</span>}
+            </Link>
           </li>
         </ul>
       </div>

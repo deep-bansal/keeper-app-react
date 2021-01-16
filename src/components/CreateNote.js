@@ -36,11 +36,11 @@ class CreateNote extends Component {
   };
 
   componentWillMount() {
-    document.addEventListener('mousedown', this.handleClick, true);
+    // document.addEventListener('mousedown', this.handleClick, true);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick, false);
+    // document.removeEventListener('mousedown', this.handleClick, false);
   }
 
   handleClick = (e) => {

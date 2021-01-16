@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Header, Footer, Note, NavMenu } from './';
-import CreateNote from './CreateNote';
 import firebase from 'firebase';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Header, NavMenu, Home, DeletedNotes } from './';
 
 class App extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class App extends Component {
     this.state = {
       notesArray: [],
       pinNotes: [],
+      deletedNotes: [],
       expandNavMenu: false,
     };
 
@@ -35,10 +36,14 @@ class App extends Component {
         return data;
       });
       const pinNotes = array.filter((note) => note.pinNote === true);
-      const notesArray = array.filter((note) => note.pinNote !== true);
+      const deletedNotes = array.filter((note) => note.deleteNote === true);
+      const notesArray = array.filter(
+        (note) => note.pinNote !== true && note.deleteNote !== true
+      );
       this.setState({
         notesArray,
         pinNotes,
+        deletedNotes,
       });
     });
   }
@@ -109,52 +114,57 @@ class App extends Component {
         .catch((error) => {
           console.log('Error:', error);
         });
+    } else if (tagName === 'deleteNote') {
+      docRef
+        .update(
+          {
+            deleteNote: val,
+            pinNote: false,
+          },
+          { merge: true }
+        )
+        .then()
+        .catch((error) => {
+          console.log('Error:', error);
+        });
     }
   };
 
   render() {
-    const { notesArray, pinNotes } = this.state;
-    console.log(notesArray, pinNotes);
+    const { notesArray, pinNotes, deletedNotes } = this.state;
+    console.log(notesArray, pinNotes, deletedNotes);
     return (
-      <div className="app">
-        <Header toExpandNavMenu={this.toExpandNavMenu} />
-        <NavMenu expandNavMenu={this.state.expandNavMenu} />
-        <div className="notes-area">
-          <CreateNote onAdd={this.addNote} />
+      <Router>
+        <div className="app">
+          <Header toExpandNavMenu={this.toExpandNavMenu} />
+          <NavMenu expandNavMenu={this.state.expandNavMenu} />
 
-          {pinNotes.length > 0 && <h2>Pinned</h2>}
-          {pinNotes.length > 0 && (
-            <div className="pinned">
-              {pinNotes.map((note) => {
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => {
                 return (
-                  <Note
-                    note={note}
-                    key={note.id}
+                  <Home
+                    addNote={this.addNote}
+                    pinNotes={this.state.pinNotes}
+                    notesArray={this.state.notesArray}
                     deleteNote={this.deleteNote}
                     updateNote={this.updateNote}
                   />
                 );
-              })}
-            </div>
-          )}
-          <br></br>
-          {pinNotes.length > 0 && <h2>Others</h2>}
-          <div className="others">
-            {notesArray.map((note) => {
-              return (
-                <Note
-                  note={note}
-                  key={note.id}
-                  deleteNote={this.deleteNote}
-                  updateNote={this.updateNote}
-                />
-              );
-            })}
-          </div>
+              }}
+            />
+            <Route
+              exact
+              path="/deletedNotes"
+              render={(props) => {
+                return <DeletedNotes deletedNotes={this.state.deletedNotes} />;
+              }}
+            />
+          </Switch>
         </div>
-
-        <Footer />
-      </div>
+      </Router>
     );
   }
 }

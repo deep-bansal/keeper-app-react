@@ -2,9 +2,10 @@ import React, { useRef, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PaletteOutlinedIcon from '@material-ui/icons/PaletteOutlined';
-import AddAlertOutlinedIcon from '@material-ui/icons/AddAlertOutlined';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
+import RestoreFromTrashOutlinedIcon from '@material-ui/icons/RestoreFromTrashOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 function Note(props) {
   const title = useRef(props.note.title);
@@ -45,6 +46,9 @@ function Note(props) {
     }
     props.updateNote('pinNote', true, props.note);
   }
+  function handleDelete() {
+    props.updateNote('deleteNote', true, props.note);
+  }
   return (
     <div className="note" style={{ backgroundColor: props.note.color }}>
       <ContentEditable
@@ -58,59 +62,70 @@ function Note(props) {
         tagName="p"
       />
 
-      <ul className="buttonList">
-        <li>
-          <button>
-            <AddAlertOutlinedIcon />
-          </button>
-        </li>
-        <li>
-          <button onClick={showPallete}>
-            <PaletteOutlinedIcon />
-          </button>
-        </li>
-        <li>
-          <button>
-            <LabelOutlinedIcon />
-          </button>
-        </li>
-        <li>
-          <button onClick={handleNotePin}>
-            <BookmarkBorderOutlinedIcon />
-          </button>
-        </li>
-        <li>
-          <button>
-            <DeleteIcon />
-          </button>
-        </li>
-      </ul>
-      <div className="color-pallete" style={{ visibility: show }}>
-        <div
-          className="color-divs"
-          style={{ backgroundColor: '#ffaf1c' }}
-          value="orange"
-          onClick={handleColor}
-        ></div>
-        <div
-          className="color-divs"
-          style={{ backgroundColor: '#7fff7f' }}
-          value="green"
-          onClick={handleColor}
-        ></div>
-        <div
-          className="color-divs"
-          style={{ backgroundColor: '#ff6868' }}
-          value="red"
-          onClick={handleColor}
-        ></div>
-        <div
-          className="color-divs"
-          style={{ backgroundColor: '#7171ff' }}
-          value="blue"
-          onClick={handleColor}
-        ></div>
-      </div>
+      {!props.note.deleteNote && (
+        <ul className="buttonList">
+          <li className="color-li">
+            <button onClick={showPallete}>
+              <PaletteOutlinedIcon />
+            </button>
+            <div className="color-pallete" style={{ visibility: show }}>
+              <div
+                className="color-divs"
+                style={{ backgroundColor: '#ffaf1c' }}
+                value="orange"
+                onClick={handleColor}
+              ></div>
+              <div
+                className="color-divs"
+                style={{ backgroundColor: '#7fff7f' }}
+                value="green"
+                onClick={handleColor}
+              ></div>
+              <div
+                className="color-divs"
+                style={{ backgroundColor: '#ff6868' }}
+                value="red"
+                onClick={handleColor}
+              ></div>
+              <div
+                className="color-divs"
+                style={{ backgroundColor: '#7171ff' }}
+                value="blue"
+                onClick={handleColor}
+              ></div>
+            </div>
+          </li>
+          <li>
+            <button>
+              <LabelOutlinedIcon />
+            </button>
+          </li>
+          <li>
+            <button onClick={handleNotePin}>
+              <BookmarkBorderOutlinedIcon />
+            </button>
+          </li>
+          <li>
+            <button onClick={handleDelete}>
+              <DeleteIcon />
+            </button>
+          </li>
+        </ul>
+      )}
+      {props.note.deleteNote && (
+        <ul className="buttonList">
+          <li>
+            <button>
+              <DeleteForeverOutlinedIcon />
+            </button>
+          </li>
+          <li>
+            <button>
+              <RestoreFromTrashOutlinedIcon />
+            </button>
+          </li>
+        </ul>
+      )}
     </div>
   );
 }
