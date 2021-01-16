@@ -11,6 +11,7 @@ function DeletedNotes(props) {
             key={note.id}
             deleteNote={props.deleteNote}
             updateNote={props.updateNote}
+            deleteNoteForever={props.deleteNoteForever}
           />
         );
       })}

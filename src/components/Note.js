@@ -49,6 +49,12 @@ function Note(props) {
   function handleDelete() {
     props.updateNote('deleteNote', true, props.note);
   }
+  function handleDeleteForever() {
+    props.deleteNoteForever(props.note);
+  }
+  function handleDeleteRestore() {
+    props.updateNote('deleteNote', false, props.note);
+  }
   return (
     <div className="note" style={{ backgroundColor: props.note.color }}>
       <ContentEditable
@@ -115,12 +121,12 @@ function Note(props) {
       {props.note.deleteNote && (
         <ul className="buttonList">
           <li>
-            <button>
+            <button onClick={handleDeleteForever}>
               <DeleteForeverOutlinedIcon />
             </button>
           </li>
           <li>
-            <button>
+            <button onClick={handleDeleteRestore}>
               <RestoreFromTrashOutlinedIcon />
             </button>
           </li>

@@ -11,12 +11,7 @@ function Home(props) {
         <div className="pinned">
           {props.pinNotes.map((note) => {
             return (
-              <Note
-                note={note}
-                key={note.id}
-                deleteNote={props.deleteNote}
-                updateNote={props.updateNote}
-              />
+              <Note note={note} key={note.id} updateNote={props.updateNote} />
             );
           })}
         </div>
@@ -26,12 +21,7 @@ function Home(props) {
       <div className="others">
         {props.notesArray.map((note) => {
           return (
-            <Note
-              note={note}
-              key={note.id}
-              deleteNote={props.deleteNote}
-              updateNote={props.updateNote}
-            />
+            <Note note={note} key={note.id} updateNote={props.updateNote} />
           );
         })}
       </div>

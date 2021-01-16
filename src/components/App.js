@@ -63,13 +63,6 @@ class App extends Component {
       });
   };
 
-  deleteNote = (id) => {
-    const newNotesArr = this.state.notesArray.filter((note) => note.id !== id);
-    this.setState({
-      notesArray: newNotesArr,
-    });
-  };
-
   updateNote = (tagName, val, note) => {
     const docRef = this.db.collection('Notes').doc(note.id);
     if (tagName === 'h1') {
@@ -129,6 +122,15 @@ class App extends Component {
         });
     }
   };
+  deleteNoteForever = (note) => {
+    const docRef = this.db.collection('Notes').doc(note.id);
+    docRef
+      .delete()
+      .then()
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+  };
 
   render() {
     const { notesArray, pinNotes, deletedNotes } = this.state;
@@ -149,7 +151,6 @@ class App extends Component {
                     addNote={this.addNote}
                     pinNotes={this.state.pinNotes}
                     notesArray={this.state.notesArray}
-                    deleteNote={this.deleteNote}
                     updateNote={this.updateNote}
                   />
                 );
@@ -159,7 +160,13 @@ class App extends Component {
               exact
               path="/deletedNotes"
               render={(props) => {
-                return <DeletedNotes deletedNotes={this.state.deletedNotes} />;
+                return (
+                  <DeletedNotes
+                    deletedNotes={this.state.deletedNotes}
+                    deleteNoteForever={this.deleteNoteForever}
+                    updateNote={this.updateNote}
+                  />
+                );
               }}
             />
           </Switch>
