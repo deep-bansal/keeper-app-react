@@ -4,11 +4,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 import '../index.css';
 
 class Header extends Component {
+  handleClick = () => {
+    this.props.toExpandNavMenu();
+  };
   render() {
     return (
       <header className="header">
         <h1 style={styles.heading}>
-          <MenuIcon className="menuIcon" />
+          <button className="menuIcon" onClick={this.handleClick}>
+            <MenuIcon className="icon" />
+          </button>
           <HighlightIcon className="logo" /> Keeper
         </h1>
       </header>

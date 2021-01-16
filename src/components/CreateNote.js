@@ -32,7 +32,7 @@ class CreateNote extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { onAdd } = this.props;
-    onAdd(this.state.title, this.state.content);
+    onAdd(this.state.title, this.state.content, 'white');
   };
 
   componentWillMount() {
@@ -44,6 +44,9 @@ class CreateNote extends Component {
   }
 
   handleClick = (e) => {
+    if (e.target === null) {
+      return;
+    }
     if (this.node.contains(e.target)) {
       this.setState({
         isClicked: true,
@@ -62,13 +65,13 @@ class CreateNote extends Component {
   render() {
     const { isClicked } = this.state;
     return (
-      <form className="create-note">
-        <div
-          ref={(node) => {
-            this.node = node;
-          }}
-          onClick={this.handleClick}
-        >
+      <form
+        className="create-note"
+        ref={(node) => {
+          this.node = node;
+        }}
+      >
+        <div onClick={this.handleClick}>
           {isClicked && (
             <input
               onChange={this.handleChange}

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PaletteOutlinedIcon from '@material-ui/icons/PaletteOutlined';
@@ -21,8 +21,25 @@ function Note(props) {
       props.updateNote(evt.currentTarget.localName, contentVal, props.note);
     }
   };
+  const [show, setOpacity] = useState('0');
+  const setColor = useState('white')[1];
+
+  function handleColor(evt) {
+    console.log(evt.target.classList.value);
+    const colorVal = evt.target.style.backgroundColor;
+    setColor(colorVal);
+    setOpacity(0);
+    props.updateNote(evt.target.classList.value, colorVal, props.note);
+  }
+  function showPallete() {
+    if (show === 0) {
+      setOpacity(1);
+    } else {
+      setOpacity(0);
+    }
+  }
   return (
-    <div className="note">
+    <div className="note" style={{ backgroundColor: props.note.color }}>
       <ContentEditable
         html={title.current}
         onChange={handleChange}
@@ -35,38 +52,60 @@ function Note(props) {
       />
 
       <ul className="buttonList">
-        <li style={{ ...styles }}>
+        <li>
           <button>
             <AddAlertOutlinedIcon />
           </button>
         </li>
-        <li style={{ ...styles }}>
-          <button>
+        <li>
+          <button onClick={showPallete}>
             <PaletteOutlinedIcon />
           </button>
         </li>
-        <li style={{ ...styles }}>
+        <li>
           <button>
             <LabelOutlinedIcon />
           </button>
         </li>
-        <li style={{ ...styles }}>
+        <li>
           <button>
             <BookmarkBorderOutlinedIcon />
           </button>
         </li>
-        <li style={{ ...styles }}>
+        <li>
           <button>
             <DeleteIcon />
           </button>
         </li>
       </ul>
+      <div className="color-pallete" style={{ opacity: show }}>
+        <div
+          className="color-divs"
+          style={{ backgroundColor: '#ffaf1c' }}
+          value="orange"
+          onClick={handleColor}
+        ></div>
+        <div
+          className="color-divs"
+          style={{ backgroundColor: '#7fff7f' }}
+          value="green"
+          onClick={handleColor}
+        ></div>
+        <div
+          className="color-divs"
+          style={{ backgroundColor: '#ff6868' }}
+          value="red"
+          onClick={handleColor}
+        ></div>
+        <div
+          className="color-divs"
+          style={{ backgroundColor: '#7171ff' }}
+          value="blue"
+          onClick={handleColor}
+        ></div>
+      </div>
     </div>
   );
 }
 
 export default Note;
-
-const styles = {
-  transition: 'all 0.5s ease-in-out',
-};

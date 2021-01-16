@@ -10,15 +10,15 @@ class NavMenu extends Component {
         <ul className="list">
           <li>
             <EmojiObjectsOutlinedIcon className="nav-icons" />
-            <span>Notes</span>
+            {this.props.expandNavMenu && <span>Notes</span>}
           </li>
           <li>
             <LabelOutlinedIcon className="nav-icons" />
-            <span>Label</span>
+            {this.props.expandNavMenu && <span>Label</span>}
           </li>
           <li>
             <DeleteOutlineIcon className="nav-icons" />
-            <span>Delete</span>
+            {this.props.expandNavMenu && <span>Delete</span>}
           </li>
         </ul>
       </div>

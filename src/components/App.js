@@ -8,10 +8,23 @@ class App extends Component {
     super(props);
     this.state = {
       notesArray: [],
+      expandNavMenu: false,
     };
 
     this.db = firebase.firestore();
   }
+
+  toExpandNavMenu = () => {
+    if (this.state.expandNavMenu) {
+      this.setState({
+        expandNavMenu: false,
+      });
+    } else {
+      this.setState({
+        expandNavMenu: true,
+      });
+    }
+  };
 
   componentDidMount() {
     this.db.collection('Notes').onSnapshot((snapshot) => {
@@ -26,12 +39,13 @@ class App extends Component {
     });
   }
 
-  addNote = (title, content) => {
+  addNote = (title, content, color) => {
     this.db
       .collection('Notes')
       .add({
         title: title,
         content: content,
+        color: color,
       })
       .then((docRef) => {
         console.log('Note has been added', docRef);
@@ -67,6 +81,15 @@ class App extends Component {
         .catch((error) => {
           console.log('Error:', error);
         });
+    } else if (tagName === 'color-divs') {
+      docRef
+        .update({
+          color: val,
+        })
+        .then()
+        .catch((error) => {
+          console.log('Error:', error);
+        });
     }
   };
 
@@ -75,8 +98,8 @@ class App extends Component {
     console.log(notesArray);
     return (
       <div className="app">
-        <Header />
-        <NavMenu />
+        <Header toExpandNavMenu={this.toExpandNavMenu} />
+        <NavMenu expandNavMenu={this.state.expandNavMenu} />
         <div className="notes-area">
           <CreateNote onAdd={this.addNote} />
 
