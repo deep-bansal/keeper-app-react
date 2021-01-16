@@ -8,6 +8,7 @@ class App extends Component {
     super(props);
     this.state = {
       notesArray: [],
+      pinNotes: [],
       expandNavMenu: false,
     };
 
@@ -28,24 +29,26 @@ class App extends Component {
 
   componentDidMount() {
     this.db.collection('Notes').onSnapshot((snapshot) => {
-      const notesArray = snapshot.docs.map((doc) => {
+      const array = snapshot.docs.map((doc) => {
         const data = doc.data();
         data['id'] = doc.id;
         return data;
       });
+      const pinNotes = array.filter((note) => note.pinNote === true);
+      const notesArray = array.filter((note) => note.pinNote !== true);
       this.setState({
         notesArray,
+        pinNotes,
       });
     });
   }
 
-  addNote = (title, content, color) => {
+  addNote = (title, content) => {
     this.db
       .collection('Notes')
       .add({
         title: title,
         content: content,
-        color: color,
       })
       .then((docRef) => {
         console.log('Note has been added', docRef);
@@ -61,6 +64,7 @@ class App extends Component {
       notesArray: newNotesArr,
     });
   };
+
   updateNote = (tagName, val, note) => {
     const docRef = this.db.collection('Notes').doc(note.id);
     if (tagName === 'h1') {
@@ -83,9 +87,24 @@ class App extends Component {
         });
     } else if (tagName === 'color-divs') {
       docRef
-        .update({
-          color: val,
-        })
+        .update(
+          {
+            color: val,
+          },
+          { merge: true }
+        )
+        .then()
+        .catch((error) => {
+          console.log('Error:', error);
+        });
+    } else if (tagName === 'pinNote') {
+      docRef
+        .update(
+          {
+            pinNote: val,
+          },
+          { merge: true }
+        )
         .then()
         .catch((error) => {
           console.log('Error:', error);
@@ -94,8 +113,8 @@ class App extends Component {
   };
 
   render() {
-    const { notesArray } = this.state;
-    console.log(notesArray);
+    const { notesArray, pinNotes } = this.state;
+    console.log(notesArray, pinNotes);
     return (
       <div className="app">
         <Header toExpandNavMenu={this.toExpandNavMenu} />
@@ -103,16 +122,35 @@ class App extends Component {
         <div className="notes-area">
           <CreateNote onAdd={this.addNote} />
 
-          {notesArray.map((note) => {
-            return (
-              <Note
-                note={note}
-                key={note.id}
-                deleteNote={this.deleteNote}
-                updateNote={this.updateNote}
-              />
-            );
-          })}
+          {pinNotes.length > 0 && <h2>Pinned</h2>}
+          {pinNotes.length > 0 && (
+            <div className="pinned">
+              {pinNotes.map((note) => {
+                return (
+                  <Note
+                    note={note}
+                    key={note.id}
+                    deleteNote={this.deleteNote}
+                    updateNote={this.updateNote}
+                  />
+                );
+              })}
+            </div>
+          )}
+          <br></br>
+          {pinNotes.length > 0 && <h2>Others</h2>}
+          <div className="others">
+            {notesArray.map((note) => {
+              return (
+                <Note
+                  note={note}
+                  key={note.id}
+                  deleteNote={this.deleteNote}
+                  updateNote={this.updateNote}
+                />
+              );
+            })}
+          </div>
         </div>
 
         <Footer />

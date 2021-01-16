@@ -32,7 +32,7 @@ class CreateNote extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { onAdd } = this.props;
-    onAdd(this.state.title, this.state.content, 'white');
+    onAdd(this.state.title, this.state.content);
   };
 
   componentWillMount() {

@@ -75,15 +75,12 @@ footer {
   padding: 10px 12px 0px 12px;
   width: 250px;
   margin: 10px;
-  float: left;
   overflow-wrap: break-word;
   position: relative;
+  display: inline-block;
+  vertical-align: top;
   /* transition: ease 10s; */
 }
-
-/* .note:hover .buttonList li {
-  opacity: 1;
-} */
 
 .note h1 {
   font-size: 1.1em;
@@ -95,12 +92,15 @@ footer {
   margin-bottom: 10px;
   white-space: pre-wrap;
 }
+.note h1,
+p:focus {
+  outline: none;
+}
 
 .buttonList {
   list-style: none;
   display: inline;
   position: relative;
-  float: left;
   margin-left: -40px;
 }
 
@@ -145,7 +145,14 @@ footer {
   margin-left: 5px;
   margin-top: 5px;
 }
-
+.others {
+  display: inline-block;
+  vertical-align: top;
+}
+.pinned {
+  display: inline-block;
+  vertical-align: top;
+}
 /* create-note */
 .create-note {
   position: relative;

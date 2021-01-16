@@ -21,22 +21,29 @@ function Note(props) {
       props.updateNote(evt.currentTarget.localName, contentVal, props.note);
     }
   };
-  const [show, setOpacity] = useState('0');
+  const [show, setVisibility] = useState('hidden');
   const setColor = useState('white')[1];
 
   function handleColor(evt) {
     console.log(evt.target.classList.value);
     const colorVal = evt.target.style.backgroundColor;
     setColor(colorVal);
-    setOpacity(0);
+    setVisibility('hidden');
     props.updateNote(evt.target.classList.value, colorVal, props.note);
   }
   function showPallete() {
-    if (show === 0) {
-      setOpacity(1);
+    if (show === 'hidden') {
+      setVisibility('visible');
     } else {
-      setOpacity(0);
+      setVisibility('hidden');
     }
+  }
+  function handleNotePin() {
+    if (props.note.pinNote === true) {
+      props.updateNote('pinNote', false, props.note);
+      return;
+    }
+    props.updateNote('pinNote', true, props.note);
   }
   return (
     <div className="note" style={{ backgroundColor: props.note.color }}>
@@ -68,7 +75,7 @@ function Note(props) {
           </button>
         </li>
         <li>
-          <button>
+          <button onClick={handleNotePin}>
             <BookmarkBorderOutlinedIcon />
           </button>
         </li>
@@ -78,7 +85,7 @@ function Note(props) {
           </button>
         </li>
       </ul>
-      <div className="color-pallete" style={{ opacity: show }}>
+      <div className="color-pallete" style={{ visibility: show }}>
         <div
           className="color-divs"
           style={{ backgroundColor: '#ffaf1c' }}
