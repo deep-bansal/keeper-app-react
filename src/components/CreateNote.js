@@ -33,6 +33,10 @@ class CreateNote extends Component {
     event.preventDefault();
     const { onAdd } = this.props;
     onAdd(this.state.title, this.state.content);
+    this.setState({
+      title: '',
+      content: '',
+    });
   };
 
   componentWillMount() {

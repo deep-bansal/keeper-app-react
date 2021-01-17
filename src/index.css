@@ -78,7 +78,12 @@ footer {
   overflow-wrap: break-word;
   display: inline-block;
   vertical-align: top;
+  font-family: 'Titillium Web', sans-serif;
   /* transition: ease 10s; */
+}
+
+.note:hover {
+  box-shadow: 0 3px 7px rgb(138, 137, 137);
 }
 
 .note h1 {
@@ -127,9 +132,8 @@ p:focus {
 }
 .color-pallete {
   height: 80px;
-  width: 80px;
+  width: 120px;
   z-index: 2;
-  float: left;
   position: absolute;
   top: -6rem;
   left: 1rem;
@@ -203,8 +207,10 @@ textarea {
   position: fixed;
   top: 97px;
   height: 528px;
+  padding-right: 25px;
   z-index: 2;
   transition: all 2s ease-in-out;
+  background-color: white;
 }
 
 .list {
@@ -214,7 +220,16 @@ textarea {
 }
 
 .list li {
-  margin-top: 19px;
+  margin-top: 22px;
+  padding: 5px;
+  /* border: 2px solid black; */
+  margin-left: -14px;
+}
+
+.list li:hover {
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  background-color: #f5da92;
 }
 
 .nav-icons {
@@ -234,7 +249,21 @@ textarea {
   position: relative;
   top: -13px;
 }
-
+.blank-backgorund {
+  position: absolute;
+  left: 35%;
+  top: 150px;
+  font-size: 2rem;
+  /* border: 2px solid black; */
+  text-align: center;
+  opacity: 0.5;
+}
+.archive {
+  left: 25%;
+}
+.blank-backgorund i {
+  font-size: 5rem;
+}
 @media only screen and (max-width: 1000px) {
   .notes-area {
     left: 200px;
@@ -249,4 +278,9 @@ textarea {
   .note {
     width: 350px;
   }
+}
+
+.links {
+  text-decoration: none;
+  color: black;
 }

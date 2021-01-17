@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react';
 import ContentEditable from 'react-contenteditable';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PaletteOutlinedIcon from '@material-ui/icons/PaletteOutlined';
-import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import RestoreFromTrashOutlinedIcon from '@material-ui/icons/RestoreFromTrashOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import ArchiveIcon from '@material-ui/icons/Archive';
 
 function Note(props) {
   const title = useRef(props.note.title);
@@ -46,6 +46,13 @@ function Note(props) {
     }
     props.updateNote('pinNote', true, props.note);
   }
+  function handleNoteArchive() {
+    if (props.note.archiveNote === true) {
+      props.updateNote('archiveNote', false, props.note);
+      return;
+    }
+    props.updateNote('archiveNote', true, props.note);
+  }
   function handleDelete() {
     props.updateNote('deleteNote', true, props.note);
   }
@@ -77,10 +84,28 @@ function Note(props) {
             <div className="color-pallete" style={{ visibility: show }}>
               <div
                 className="color-divs"
-                style={{ backgroundColor: '#ffaf1c' }}
+                style={{ backgroundColor: '#FFC233' }}
                 value="orange"
                 onClick={handleColor}
               ></div>
+              <div
+                className="color-divs"
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  border: '1px solid lightgray',
+                }}
+                value="orange"
+                onClick={handleColor}
+              ></div>
+              <div
+                className="color-divs"
+                style={{
+                  backgroundColor: '#69C9B6',
+                }}
+                value="orange"
+                onClick={handleColor}
+              ></div>
+
               <div
                 className="color-divs"
                 style={{ backgroundColor: '#7fff7f' }}
@@ -102,8 +127,8 @@ function Note(props) {
             </div>
           </li>
           <li>
-            <button>
-              <LabelOutlinedIcon />
+            <button onClick={handleNoteArchive}>
+              <ArchiveIcon />
             </button>
           </li>
           <li>

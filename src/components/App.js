@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Header, NavMenu, Home, DeletedNotes } from './';
+import { Header, NavMenu, Home, DeletedNotes, ArchiveNotes } from './';
 
 class App extends Component {
   constructor(props) {
@@ -10,6 +10,7 @@ class App extends Component {
       notesArray: [],
       pinNotes: [],
       deletedNotes: [],
+      archiveNotes: [],
       expandNavMenu: false,
     };
 
@@ -17,7 +18,7 @@ class App extends Component {
   }
 
   toExpandNavMenu = () => {
-    if (this.state.expandNavMenu) {
+    if (this.state.expandNavMenu === true) {
       this.setState({
         expandNavMenu: false,
       });
@@ -37,13 +38,18 @@ class App extends Component {
       });
       const pinNotes = array.filter((note) => note.pinNote === true);
       const deletedNotes = array.filter((note) => note.deleteNote === true);
+      const archiveNotes = array.filter((note) => note.archiveNote === true);
       const notesArray = array.filter(
-        (note) => note.pinNote !== true && note.deleteNote !== true
+        (note) =>
+          note.pinNote !== true &&
+          note.deleteNote !== true &&
+          note.archiveNote !== true
       );
       this.setState({
         notesArray,
         pinNotes,
         deletedNotes,
+        archiveNotes,
       });
     });
   }
@@ -113,6 +119,20 @@ class App extends Component {
           {
             deleteNote: val,
             pinNote: false,
+            archiveNote: false,
+          },
+          { merge: true }
+        )
+        .then()
+        .catch((error) => {
+          console.log('Error:', error);
+        });
+    } else if (tagName === 'archiveNote') {
+      docRef
+        .update(
+          {
+            archiveNote: val,
+            pinNote: false,
           },
           { merge: true }
         )
@@ -157,13 +177,23 @@ class App extends Component {
               }}
             />
             <Route
-              exact
               path="/deletedNotes"
               render={(props) => {
                 return (
                   <DeletedNotes
                     deletedNotes={this.state.deletedNotes}
                     deleteNoteForever={this.deleteNoteForever}
+                    updateNote={this.updateNote}
+                  />
+                );
+              }}
+            />
+            <Route
+              path="/archiveNotes"
+              render={(props) => {
+                return (
+                  <ArchiveNotes
+                    archiveNotes={this.state.archiveNotes}
                     updateNote={this.updateNote}
                   />
                 );

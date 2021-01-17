@@ -4,6 +4,14 @@ import { Note } from './';
 function DeletedNotes(props) {
   return (
     <div className="notes-area">
+      {props.deletedNotes.length === 0 && (
+        <div className="blank-backgorund">
+          <i className="far fa-trash-alt"></i>
+          <br></br>
+          <br></br>
+          No notes in Trash
+        </div>
+      )}
       {props.deletedNotes.map((note) => {
         return (
           <Note
